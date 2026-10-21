@@ -2,15 +2,11 @@
 Executor Agent —— 任务执行智能体
 ===============================
 职责：读取当前子任务，调用工具（搜索、文档读取等）执行任务，返回结果。
-
 类比：就像一个执行员工，接到具体任务后，用各种工具把活干完，交回成果。
 """
-
 from langchain_core.messages import AIMessage
-
 from graph.state import AgentState
 from tools import web_search
-
 
 def executor_agent_run(state: AgentState) -> dict:
     """
@@ -28,7 +24,6 @@ def executor_agent_run(state: AgentState) -> dict:
     idx = state["current_subtask_idx"]
     subtask = state["subtasks"][idx]
     task_desc = subtask["task"]
-
     # ========== 模拟执行子任务（Demo 阶段） ==========
     # 正式项目：根据子任务类型，调用不同工具
     # 例如：
@@ -43,15 +38,12 @@ def executor_agent_run(state: AgentState) -> dict:
     search_result = web_search(task_desc)
     result = f"【子任务 {subtask['id']} 执行结果】\n{search_result}\n✓ 已完成"
     # ================================================
-
     # 更新子任务状态
     new_subtasks = state["subtasks"].copy()
     new_subtasks[idx]["status"] = "completed"
-
     # 追加执行结果
     new_results = state["subtask_results"].copy()
     new_results.append(result)
-
     # 记录工具日志
     new_logs = state["tool_logs"].copy()
     new_logs.append({
@@ -60,11 +52,12 @@ def executor_agent_run(state: AgentState) -> dict:
         "tool_used": "web_search",
         "status": "success"
     })
-
     return {
         "subtasks": new_subtasks,
         "subtask_results": new_results,
         "tool_logs": new_logs,
+        "task_results": new_results,
+        "current_subtask_idx": state["current_subtask_idx"] + 1,
         "messages": state["messages"] + [
             AIMessage(content=f"⚡ Executor：{task_desc[:30]}... 完成")
         ],

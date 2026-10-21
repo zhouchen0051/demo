@@ -47,7 +47,7 @@ def run_workflow(user_query: str, human_feedback: str = None) -> dict:
 
     # 执行工作流
     print("🚀 多智能体工作流启动...\n")
-    result = graph.invoke(init_state)
+    result = graph.invoke(init_state, config={"recursion_limit": 50})
 
     # 打印过程日志
     print("=" * 60)
