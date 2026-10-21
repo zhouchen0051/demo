@@ -1,0 +1,28 @@
+# ============================================
+# Multi-Agent Task Workbench 依赖清单
+# ============================================
+
+# ---- LangGraph & LangChain 核心框架 ----
+langgraph
+langchain
+langchain-core
+langchain-openai
+
+# ---- 环境变量配置 ----
+python-dotenv
+
+# ---- 网络请求与数据解析 ----
+requests
+beautifulsoup4
+
+# ---- 可视化（绘制 LangGraph 流程图）----
+# pygraphviz 需要系统安装 graphviz，Windows 可能需要单独安装
+# pygraphviz
+pydot
+
+# ---- Web 界面 ----
+gradio
+
+# ---- 文档读取（可选）----
+# pypdf
+# python-docx
