@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  agent-demo:
+    image: langgraph-demo:v1
+    container_name: langgraph-agent
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./.env:/app/.env
+    command: python main.py
