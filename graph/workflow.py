@@ -68,6 +68,14 @@ def route_after_reviewer(state: AgentState) -> str:
         return "human_feedback_node"
     else:
         return "summarizer_node"
+
+def route_after_executor(state: AgentState) -> str:
+    current_idx = state["current_subtask_idx"]
+    total_tasks = len(state["subtasks"])
+    next_node = "executor_node" if (current_idx + 1 < total_tasks) else "reviewer_node"
+    print(f"==== 路由判断：current_idx={current_idx}, total={total_tasks}, 下一站={next_node}")
+    return next_node
+
 # ==================== 图构建函数 ====================
 def build_graph():
     """

@@ -6,5 +6,6 @@ tools 包导出模块
 
 from .search_tool import web_search
 from .doc_reader import read_local_doc
+from .calculator_tool import calculator
 
-__all__ = ["web_search", "read_local_doc"]
+__all__ = ["web_search", "read_local_doc", "calculator"]
